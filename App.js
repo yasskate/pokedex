@@ -19,6 +19,9 @@ export default function App() {
         <Stack.Screen
           name='Tabs'
           component={TabNavigator}
+          options={{
+            header: () => (<></>)
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
