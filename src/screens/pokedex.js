@@ -6,41 +6,63 @@ import Loading from '../components/loading'
 import useApi from '../hooks/useApi'
 import { PokedexContext } from '../store/contexts/pokedexContext'
 import { colors } from '../utils/colors'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 
-const POKE_API = 'https://pokeapi.co/api/v2/pokemon?limit=151&offset=0'
+const POKE_API = 'https://pokeapi.co/api/v2'
 
 const Pokedex = ({ navigation }) => {
   const [state, dispatch] = useContext(PokedexContext)
-  const { loading, data } = useApi({ url: POKE_API })
+  const { loading, data: pokemons } = useApi({
+    url: `${POKE_API}/pokemon?limit=151&offset=0`
+  })
 
-  const gotoPokemonDetailScreen = () =>
-    navigation.navigate('PokemonDetail')
+  useEffect(() => {
+    if (pokemons === null) return
+    fillPokedexData()
+  }, [pokemons])
 
-  if (loading && data === null) {
+  const gotoPokemonDetailScreen = (pokemonId) =>
+  navigation.navigate('PokemonDetail', { pokemonId })
+
+  const fillPokedexData = async () => {
+    const sortedPokemons = sortPokemonsAlphabetically()
+    const pokemonDetails = await requestPokemonDetails(sortedPokemons)
+    const filteredPokemonDetails = pokemonDetails.map(pokemon => pokemon.value)
+
+    dispatch({ type: 'ADD_POKEMONS_TO_POKEDEX', payload: filteredPokemonDetails })
+  }
+
+  const requestPokemonDetails = async (pokemonSliced) => {
+    const response = await Promise.allSettled(pokemonSliced.map(async pokemon =>
+      (await (await fetch(pokemon.url)).json())))
+
+    return response
+  }
+
+  const sortPokemonsAlphabetically = () =>
+    pokemons.sort((itm1, itm2) => itm1.name.localeCompare(itm2.name))
+
+  const loadPokemonsToPokedex = () => {
+    console.log("Catch'em all to watch Johto's pokemon region") 
+  }
+
+  if (loading && state?.pokedex === null) {
     return <Loading />
   }
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
-      <Text>STATE CONTEXT ----== {state.counter}</Text>
-      <Button
-        title="Increase context by 1"
-        onPress={() => dispatch({ type: 'INCREASE_BY_ONE' })}
-      />
       <FlatList
-        style={styles.pokemonList}
-        data={data.results}
+        style={styles.pokedex}
+        data={state.pokedex}
         numColumns={2}
-        renderItem={(item, index) => <PokemonCard {...item} />}
+        renderItem={(item, index) => (
+          <PokemonCard {...item} onPress={gotoPokemonDetailScreen} />
+        )}
         keyExtractor={(item, index) => index}
+        onEndReached={loadPokemonsToPokedex}
       />
-
-      <Button
-        title="Go to Pokemon Detail Screen"
-        onPress={gotoPokemonDetailScreen}
-        />
     </SafeAreaView>
   )
 }
@@ -55,9 +77,9 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     backgroundColor: colors.hardYellow,
   },
-  pokemonList: {
+  pokedex: {
     backgroundColor: colors.blue 
   }
-});
+})
 
 export default Pokedex
