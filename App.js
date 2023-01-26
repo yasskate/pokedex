@@ -1,24 +1,24 @@
 import { StatusBar } from 'expo-status-bar';
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native';
+
+import Information from './src/screens/information'
+import TabNavigator from './src/navigation/tabNavigator'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 const Stack = createNativeStackNavigator()
 
 export default function App() {
-  const CustomComponent = () => (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  )
-
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator  initialRouteName='Tabs'>
         <Stack.Screen
-          name='Pokedex'
-          component={CustomComponent}
+          name='Information'
+          component={Information}
+        />
+        <Stack.Screen
+          name='Tabs'
+          component={TabNavigator}
         />
       </Stack.Navigator>
     </NavigationContainer>
