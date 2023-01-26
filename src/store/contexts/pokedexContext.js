@@ -1,8 +1,8 @@
 import { createContext } from 'react'
 
 export const initalState = {
-  counter: 0,
-  pokedex: []
+  pokedex: null,
+  pokemon: null
 }
 
 export const PokedexContext = createContext(initalState)
