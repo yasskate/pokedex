@@ -8,7 +8,7 @@ const useApi = ({ url }) => {
   const fetchData = async () => {
     try {
       const response = await (await fetch(url)).json()
-      setData(response)
+      setData(response.results)
     } catch (error) {
       setError(prevError => !prevError)
     } finally {
