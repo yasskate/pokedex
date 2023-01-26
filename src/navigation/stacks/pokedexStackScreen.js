@@ -11,7 +11,7 @@ const Stack = createNativeStackNavigator()
 const PokedexStackScreen = () => (
   <Stack.Navigator initialRouteName='Pokedex'>
     <Stack.Screen
-      name='Pokedex'
+      name='PokedexList'
       component={Pokedex}
       options={{
         headerTintColor: 'white',
