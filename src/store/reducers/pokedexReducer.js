@@ -1,7 +1,11 @@
 export const pokedexReducer = (state, action) => {
   switch (action.type) {
-    case 'INCREASE_BY_ONE':
-      return { ...state, counter: state.counter + 1}
+    case 'ADD_POKEMONS_TO_POKEDEX':
+      return { ...state, pokedex: [...action.payload]}
+    case 'SET_POKEMON_DETAIL':
+      return { ...state, pokemon: action.payload }
+    case 'CLEAR_POKEMON_DETAIL':
+      return { ...state, pokemon: null }
   }
 }
 
