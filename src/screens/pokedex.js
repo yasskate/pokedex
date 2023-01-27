@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     width: '95%'
   },
   querySearch: {
-    backgroundColor: colors.hardYellow,
+    backgroundColor: colors.yellow,
     borderRadius: 15,
     color: colors.hardBlue,
     fontWeight: 'bold',
