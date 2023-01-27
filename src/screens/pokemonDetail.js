@@ -5,6 +5,9 @@ import { PokedexContext } from '../store/contexts/pokedexContext'
 import { colors } from '../utils/colors'
 import { capitalizeWord } from '../utils/utils'
 
+// 2. Attack | pokemon. ?
+// 5. Picture gallery
+
 const PokemonDetail = ({ route }) => {
   const [{ pokedex, pokemon }, dispatch] = useContext(PokedexContext)
   const { pokemonId } = route.params
@@ -69,16 +72,30 @@ const PokemonDetail = ({ route }) => {
       <StatusBar style="auto" />
       <HeroImage />
       <Text style={styles.name}>{capitalizeWord(pokemon?.name ?? '')}</Text>
-      <BodyDimensions />
-      <Abilities />
+      <ScrollView
+        horizontal={false}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        style={{ width: '100%' }}
+        contentContainerStyle={styles.contentContainerStyles}
+      >
+        <BodyDimensions />
+        <Abilities />
+      </ScrollView>
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
+  contentContainerStyles: {
+    alignItems: 'center',
+    flex: 1,
+    width: '100%'
+  },
   container: {
     alignItems: 'center',
     backgroundColor: colors.hardBlue,
+    width: '100%',
     flex: 1
   },
   hero: {
