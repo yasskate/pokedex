@@ -69,16 +69,17 @@ const Pokedex = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 20,
-    height: '100%',
+    // justifyContent: 'center',
+    backgroundColor: colors.hardBlue,
+    // backgroundColor: colors.hardYellow,
+    flex: 1,
     flexGrow: 1,
-    backgroundColor: colors.hardYellow,
+    width: '100%'
   },
   pokedex: {
-    backgroundColor: colors.blue 
+    // backgroundColor: colors.blue,
+    width: '95%'
   }
 })
 
