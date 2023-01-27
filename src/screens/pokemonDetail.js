@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Image, Text, View } from 'react-native'
+import { StyleSheet, Image, Text, View, SafeAreaView, ScrollView } from 'react-native'
 import { PokedexContext } from '../store/contexts/pokedexContext'
+import { colors } from '../utils/colors'
+import { capitalizeWord } from '../utils/utils'
 
 const PokemonDetail = ({ route }) => {
-  const [state, dispatch] = useContext(PokedexContext)
+  const [{ pokedex, pokemon }, dispatch] = useContext(PokedexContext)
   const { pokemonId } = route.params
 
   useEffect(() => {
@@ -16,21 +18,130 @@ const PokemonDetail = ({ route }) => {
   }, [])
   
   const fillPokemonDetail = () => {
-    const [selectedPokemon] = state.pokedex.filter(pokemon => pokemon.id === pokemonId)
+    const [selectedPokemon] = pokedex.filter(pokemon => pokemon.id === pokemonId)
     dispatch({ type: 'SET_POKEMON_DETAIL', payload: selectedPokemon })
   }
 
-  return (
-    <View>
-      <StatusBar style="auto" />
-      <Text>POKEMON DETAIL!</Text>
-      <Text>{state?.pokemon?.name}</Text>
+  const HeroImage = () => (
+    <View style={styles.hero}>
       <Image
-        style={{width: 300, height: 200}}
-        source={{ uri: state.pokemon?.sprites?.front_default }}
+        style={styles.heroImage}
+        source={{ uri: pokemon?.sprites?.other?.['official-artwork']?.front_default}}
       />
     </View>
   )
+
+  const BodyDimensions = () => (
+    <View style={styles.infoContainer}>
+      <View style={styles.bodyDimensions}>
+        <Text style={styles.bodySize}>{pokemon?.weight/10} kg</Text>
+        <Text style={styles.bodySizeTitle}>Weight</Text>
+      </View>
+      <View style={styles.bodyDimensions}>
+        <Text style={styles.bodySize}>{pokemon?.height/10} m</Text>
+        <Text style={styles.bodySizeTitle}>Height</Text>
+      </View>
+    </View>
+  )
+
+  const Abilities = () => {
+    return (
+      <View style={styles.abilitiesContainer}>
+        <Text style={styles.abilitiesTitle}>Abilities</Text>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          scrollEventThrottle={200}
+          style={styles.abilitiesScrollContainer}
+        >
+          {pokemon?.abilities.map(ability => (
+            <View style={styles.abilityContainer}>
+              <Text style={styles.abilityName}>{capitalizeWord(ability?.ability?.name)}</Text>
+            </View>
+          ))}
+        </ScrollView>
+      </View>
+    )
+  }
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <StatusBar style="auto" />
+      <HeroImage />
+      <Text style={styles.name}>{capitalizeWord(pokemon?.name ?? '')}</Text>
+      <BodyDimensions />
+      <Abilities />
+    </SafeAreaView>
+  )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    backgroundColor: colors.hardBlue,
+    flex: 1
+  },
+  hero: {
+    alignItems: 'center',
+    backgroundColor: colors.yellow,
+    borderBottomLeftRadius: 50,
+    borderBottomRightRadius: 50,
+    width: '100%'
+  },
+  heroImage: {
+    height: 350,
+    width: 360,
+  },
+  infoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '90%'
+  },
+  name: {
+    color: colors.white,
+    fontSize: 40,
+    fontWeight: 'bold',
+    marginVertical: 30
+  },
+  bodyDimensions: {
+    alignItems: 'center'
+  },
+  bodySize: {
+    color: colors.white,
+    fontSize: 24,
+    fontWeight: 'bold'
+  },
+  bodySizeTitle: {
+    color: colors.hardYellow,
+    fontSize: 16,
+  },
+  abilitiesContainer: {
+    alignItems: 'center',
+    marginTop: 30,
+    width: '90%'
+  },
+  abilitiesTitle: {
+    color: colors.hardYellow,
+    fontSize: 26,
+    fontWeight: 'bold',
+    paddingLeft: 15
+  },
+  abilitiesScrollContainer: {
+    marginTop: 10
+  },
+  abilityContainer: {
+    backgroundColor: colors.yellow,
+    justifyContent: 'center',
+    height: 70,
+    paddingHorizontal: 10,
+    margin: 10,
+    borderRadius: 30
+  },
+  abilityName: {
+    color: colors.hardBlue,
+    fontSize: 20,
+    fontWeight: 'bold'
+  }
+})
 
 export default PokemonDetail

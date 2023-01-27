@@ -7,6 +7,7 @@ const PokemonCard = ({
   onPress = () => {}
 }) => {
 
+  // TODO: Separate this in its own component file
   const PokemonTypes = () => {
     const types = pokemon.types.map(type => type.type.name)
 
@@ -66,6 +67,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     color: colors.white,
     fontSize: 12,
+    fontWeight: 'bold',
     padding: 5
   }
 })
