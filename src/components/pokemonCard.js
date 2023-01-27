@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     width: '45%'
   },
   container: {
-    backgroundColor: colors.hardYellow,
+    backgroundColor: colors.yellow,
     alignItems: 'center',
     paddingVertical: 10,
     borderRadius: 12
