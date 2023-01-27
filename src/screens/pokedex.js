@@ -47,7 +47,6 @@ const Pokedex = ({ navigation }) => {
       pokemon.name.includes(name.toLowerCase()))
 
     dispatch({ type: 'SET_FILTERED_POKEMONS', payload: filteredPokedex })
-    dispatch({ type: 'UPDATE_QUERY_SEARCH', payload: filteredPokedex })
   }
 
   const searchPokemon = name => {
@@ -56,6 +55,8 @@ const Pokedex = ({ navigation }) => {
     } else {
       dispatch({ type: 'RESET_FILTERED_POKEMONS' })
     }
+
+    dispatch({ type: 'UPDATE_QUERY_SEARCH', payload: name })
   }
 
   const loadPokemonsToPokedex = () => {
