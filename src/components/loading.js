@@ -1,4 +1,5 @@
 import { Image, StyleSheet, View } from "react-native"
+import { colors } from "../utils/colors"
 
 const Loading = () => (
   <View style={styles.container}>
@@ -11,12 +12,13 @@ const Loading = () => (
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
+    alignSelf: 'center',
+    borderRadius: 50,
+    backgroundColor: colors.yellow,
     justifyContent: 'center',
-    paddingTop: 20,
-    backgroundColor: '#ecf0f1',
-  },
-});
+    width: '50%'
+  }
+})
 
 export default Loading

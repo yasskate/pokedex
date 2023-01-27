@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Button, View, Text, StyleSheet, FlatList, TextInput } from 'react-native'
+import { Button, View, Text, StyleSheet, FlatList, TextInput, Image } from 'react-native'
 import PokemonCard from '../components/pokemonCard'
 import Loading from '../components/loading'
 import useApi from '../hooks/useApi'
@@ -47,7 +47,6 @@ const Pokedex = ({ navigation }) => {
       pokemon.name.includes(name.toLowerCase()))
 
     dispatch({ type: 'SET_FILTERED_POKEMONS', payload: filteredPokedex })
-    dispatch({ type: 'UPDATE_QUERY_SEARCH', payload: filteredPokedex })
   }
 
   const searchPokemon = name => {
@@ -56,15 +55,25 @@ const Pokedex = ({ navigation }) => {
     } else {
       dispatch({ type: 'RESET_FILTERED_POKEMONS' })
     }
+
+    dispatch({ type: 'UPDATE_QUERY_SEARCH', payload: name })
   }
 
   const loadPokemonsToPokedex = () => {
     console.log("Catch'em all to watch Johto's pokemon region :B") 
   }
 
-  if (loading && state?.pokedex === null) {
-    return <Loading />
-  }
+  const EmptyStateImage = () => (
+    <View style={styles.emptyStateContainer}>
+      <Image
+        source={{ uri: 'https://i.pinimg.com/originals/ce/cc/91/cecc913aee77c99b18d2043dbbd8bd72.gif' }}
+        style={styles.emptyStateImage}
+      />
+      <View style={styles.emptyStateMessageContainer}>
+        <Text numberOfLines={3} style={styles.emptyStateMessage}>The "{state.querySearch}" pokemon isn't from Kanto's region</Text>
+      </View>
+    </View>
+  )
 
   return (
     <SafeAreaView style={styles.container}>
@@ -72,20 +81,30 @@ const Pokedex = ({ navigation }) => {
       <TextInput
         style={styles.querySearch}
         onChangeText={name => searchPokemon(name)}
-        placeholder="Call your pokemon!"
+        placeholder="Search pokemon"
         underlineColorAndroid="transparent"
         value={state.querySearch}
       />
-      <FlatList
-        style={styles.pokedex}
-        data={state.pokedex}
-        numColumns={2}
-        renderItem={(item, index) => (
-          <PokemonCard {...item} onPress={gotoPokemonDetailScreen} />
-        )}
-        keyExtractor={(item, index) => index}
-        onEndReached={loadPokemonsToPokedex}
-      />
+      {state.pokedex === null
+          ? (
+            <View style={styles.loadingContainer}>
+              <Loading />
+            </View>
+          )
+          : (
+              <FlatList
+                style={styles.pokedex}
+                data={state.pokedex}
+                numColumns={2}
+                renderItem={(item, index) => (
+                  <PokemonCard {...item} onPress={gotoPokemonDetailScreen} />
+                )}
+                keyExtractor={(item, index) => index}
+                onEndReached={loadPokemonsToPokedex}
+                ListEmptyComponent={EmptyStateImage}
+              />
+          )
+        }
     </SafeAreaView>
   )
 }
@@ -97,6 +116,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexGrow: 1,
     width: '100%'
+  },
+  loadingContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 0.5
   },
   pokedex: {
     width: '95%'
@@ -110,6 +134,31 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 5,
     width: '80%'
+  },
+  emptyStateContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    backgroundColor: colors.yellow,
+    borderRadius: 50,
+    width: '90%',
+  },
+  emptyStateImage: {
+    height: 250,
+    marginVertical: 30,
+    width: '100%'
+  },
+  emptyStateMessageContainer: {
+    borderRadius: 20,
+    backgroundColor: colors.blue,
+    padding: 15,
+    marginBottom: 20
+  },
+  emptyStateMessage: {
+    color: colors.white,
+    fontSize: 28,
+    fontWeight: 'bold',
+    textAlign: 'center'
   }
 })
 

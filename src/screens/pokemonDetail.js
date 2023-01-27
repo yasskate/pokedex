@@ -58,7 +58,7 @@ const PokemonDetail = ({ route }) => {
           style={styles.abilitiesScrollContainer}
         >
           {pokemon?.abilities.map(ability => (
-            <View style={styles.abilityContainer}>
+            <View key={ability.slot} style={styles.abilityContainer}>
               <Text style={styles.abilityName}>{capitalizeWord(ability?.ability?.name)}</Text>
             </View>
           ))}
