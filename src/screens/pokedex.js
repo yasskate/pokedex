@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Button, View, Text, StyleSheet, FlatList } from 'react-native'
+import { Button, View, Text, StyleSheet, FlatList, TextInput } from 'react-native'
 import PokemonCard from '../components/pokemonCard'
 import Loading from '../components/loading'
 import useApi from '../hooks/useApi'
@@ -42,8 +42,24 @@ const Pokedex = ({ navigation }) => {
   const sortPokemonsAlphabetically = () =>
     pokemons.sort((itm1, itm2) => itm1.name.localeCompare(itm2.name))
 
+  const filterPokemons = name => {
+    const filteredPokedex = state.pokedexMainSource.filter(pokemon =>
+      pokemon.name.includes(name.toLowerCase()))
+
+    dispatch({ type: 'SET_FILTERED_POKEMONS', payload: filteredPokedex })
+    dispatch({ type: 'UPDATE_QUERY_SEARCH', payload: filteredPokedex })
+  }
+
+  const searchPokemon = name => {
+    if (name) {
+      filterPokemons(name)
+    } else {
+      dispatch({ type: 'RESET_FILTERED_POKEMONS' })
+    }
+  }
+
   const loadPokemonsToPokedex = () => {
-    console.log("Catch'em all to watch Johto's pokemon region") 
+    console.log("Catch'em all to watch Johto's pokemon region :B") 
   }
 
   if (loading && state?.pokedex === null) {
@@ -53,6 +69,13 @@ const Pokedex = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
+      <TextInput
+        style={styles.querySearch}
+        onChangeText={name => searchPokemon(name)}
+        placeholder="Call your pokemon!"
+        underlineColorAndroid="transparent"
+        value={state.querySearch}
+      />
       <FlatList
         style={styles.pokedex}
         data={state.pokedex}
@@ -70,16 +93,23 @@ const Pokedex = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    // justifyContent: 'center',
     backgroundColor: colors.hardBlue,
-    // backgroundColor: colors.hardYellow,
     flex: 1,
     flexGrow: 1,
     width: '100%'
   },
   pokedex: {
-    // backgroundColor: colors.blue,
     width: '95%'
+  },
+  querySearch: {
+    backgroundColor: colors.hardYellow,
+    borderRadius: 15,
+    color: colors.hardBlue,
+    fontWeight: 'bold',
+    marginBottom: 19,
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    width: '80%'
   }
 })
 
