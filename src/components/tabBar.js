@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   tabTitle: isFocused => ({
     color: isFocused ? colors.hardYellow : colors.white,
-    fontSize: 16,
+    fontSize: isFocused ? 20 : 16,
     fontWeight: isFocused ? 'bold' : 'normal'
   }),
 
