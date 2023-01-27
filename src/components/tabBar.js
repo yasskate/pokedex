@@ -3,14 +3,7 @@ import { colors } from '../utils/colors'
 
 const TabBar = ({ state, descriptors, navigation }) => {
   return (
-    <View style={{
-      flexDirection: 'row',
-      backgroundColor: colors.blue,
-      height:50,
-      borderRadius:50,
-      justifyContent:"center",
-      alignItems:"center"
-      }}>
+    <View style={styles.container}>
 
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
@@ -32,14 +25,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
           if (!isFocused && !event.defaultPrevented) {
             navigation.navigate(route.name);
           }
-        };
-
-        const onLongPress = () => {
-          navigation.emit({
-            type: 'tabLongPress',
-            target: route.key,
-          });
-        };
+        }
 
         return (
           <TouchableOpacity
@@ -49,17 +35,40 @@ const TabBar = ({ state, descriptors, navigation }) => {
             accessibilityLabel={options.tabBarAccessibilityLabel}
             testID={options.tabBarTestID}
             onPress={onPress}
-            onLongPress={onLongPress}
-            style={{ flex: 1, alignItems:"center" }}
+            style={styles.tab}
           >
-            <Text style={{ color: isFocused ? colors.hardYellow : colors.hardBlue }}>
+            <Text style={styles.tabTitle(isFocused)}>
               {label}
             </Text>
           </TouchableOpacity>
-        );
+        )
       })}
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    alignSelf: 'center',
+    backgroundColor: colors.blue,
+    borderRadius: 50,
+    flexDirection: 'row',
+    marginVertical: 20,
+    height: 60,
+    width: '90%'
+  },
+  tab: {
+    alignItems: 'center',
+    flex: 1,
+    width: '100%'
+  },
+  tabTitle: isFocused => ({
+    color: isFocused ? colors.hardYellow : colors.white,
+    fontSize: 16,
+    fontWeight: isFocused ? 'bold' : 'normal'
+  }),
+
+})
 
 export default TabBar
