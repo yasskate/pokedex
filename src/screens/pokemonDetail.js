@@ -69,7 +69,7 @@ const PokemonDetail = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
       <HeroImage />
       <Text style={styles.name}>{capitalizeWord(pokemon?.name ?? '')}</Text>
       <ScrollView
