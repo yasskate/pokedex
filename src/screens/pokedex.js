@@ -22,7 +22,7 @@ const Pokedex = ({ navigation }) => {
   }, [pokemons])
 
   const gotoPokemonDetailScreen = (pokemonId) =>
-  navigation.navigate('PokemonDetail', { pokemonId })
+    navigation.navigate('PokemonDetail', { pokemonId })
 
   const fillPokedexData = async () => {
     const sortedPokemons = sortPokemonsAlphabetically()
@@ -77,7 +77,7 @@ const Pokedex = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
       <TextInput
         style={styles.querySearch}
         onChangeText={name => searchPokemon(name)}
