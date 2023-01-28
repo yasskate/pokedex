@@ -21,8 +21,8 @@ const Pokedex = ({ navigation }) => {
     fillPokedexData()
   }, [pokemons])
 
-  const gotoPokemonDetailScreen = (pokemonId) =>
-    navigation.navigate('PokemonDetail', { pokemonId })
+  const gotoPokemonDetailScreen = (pokemonId, pokemonName) =>
+    navigation.navigate('PokemonDetail', { pokemonId, pokemonName })
 
   const fillPokedexData = async () => {
     const sortedPokemons = sortPokemonsAlphabetically()
