@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { View, Text, StyleSheet, FlatList, TextInput, Image } from 'react-native'
+import { View, Text, StyleSheet, FlatList, TextInput, Image, ScrollView } from 'react-native'
 import PokemonCard from '../components/pokemonCard'
 import Loading from '../components/loading'
 import useApi from '../hooks/useApi'
@@ -78,33 +78,35 @@ const Pokedex = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" />
-      <TextInput
-        style={styles.querySearch}
-        onChangeText={name => searchPokemon(name)}
-        placeholder="Search pokemon"
-        underlineColorAndroid="transparent"
-        value={state.querySearch}
-      />
-      {state.pokedex === null
-          ? (
-            <View style={styles.loadingContainer}>
-              <Loading />
-            </View>
-          )
-          : (
-              <FlatList
-                style={styles.pokedex}
-                data={state.pokedex}
-                numColumns={2}
-                renderItem={(item, index) => (
-                  <PokemonCard {...item} onPress={gotoPokemonDetailScreen} />
-                )}
-                keyExtractor={(item, index) => index}
-                onEndReached={loadPokemonsToPokedex}
-                ListEmptyComponent={EmptyStateImage}
-              />
-          )
-        }
+      <>
+        <TextInput
+          style={styles.querySearch}
+          onChangeText={name => searchPokemon(name)}
+          placeholder="Search pokemon"
+          underlineColorAndroid="transparent"
+          value={state.querySearch}
+        />
+        {state.pokedex === null
+            ? (
+              <View style={styles.loadingContainer}>
+                <Loading />
+              </View>
+            )
+            : (
+                <FlatList
+                  style={styles.pokedex}
+                  data={state.pokedex}
+                  numColumns={2}
+                  renderItem={(item, index) => (
+                    <PokemonCard {...item} onPress={gotoPokemonDetailScreen} />
+                  )}
+                  keyExtractor={(item, index) => index}
+                  onEndReached={loadPokemonsToPokedex}
+                  ListEmptyComponent={EmptyStateImage}
+                />
+            )
+          }
+      </>
     </SafeAreaView>
   )
 }
@@ -113,7 +115,6 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     backgroundColor: colors.hardBlue,
-    flex: 1,
     flexGrow: 1,
     width: '100%'
   },
