@@ -48,7 +48,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
               {isFocused && (
                 <Image
                   source={{ uri: getUri(label) }}
-                  style={{  width: 15, height: 25 }}
+                  style={{  width: 20, height: 25 }}
                 />
               )}
               <Text style={styles.tabTitle(isFocused)}>
