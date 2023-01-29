@@ -20,7 +20,7 @@ const PokemonCard = ({
     <TouchableOpacity
       key={pokemon.id}
       style={styles.touchableContainer}
-      onPress={() => onPress(pokemon.id)}
+      onPress={() => onPress(pokemon.id, pokemon.name)}
     >
       <View style={styles.container}>
         <Image

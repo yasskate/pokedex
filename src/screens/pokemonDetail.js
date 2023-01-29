@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Image, Text, View, SafeAreaView, ScrollView } from 'react-native'
 import { PokedexContext } from '../store/contexts/pokedexContext'
@@ -69,7 +69,7 @@ const PokemonDetail = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
       <HeroImage />
       <Text style={styles.name}>{capitalizeWord(pokemon?.name ?? '')}</Text>
       <ScrollView
