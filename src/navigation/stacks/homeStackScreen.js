@@ -16,7 +16,7 @@ const HomeStackScreen = () => (
       name='Home'
       component={Home}
       options={{
-        title: 'Home',
+        title: '',
         headerStyle: {
           backgroundColor: colors.hardBlue
         }
