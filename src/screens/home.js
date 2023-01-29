@@ -12,8 +12,8 @@ const Home = ({ navigation }) => {
   const gotoInformationScreen = () =>
     navigation.navigate('Information')
 
-  const GuideInstructions = () => (INSTRUCTIONS.map(instruction => (
-    <View style={styles.instructionWrapper}>
+  const GuideInstructions = () => (INSTRUCTIONS.map((instruction, index) => (
+    <View key={index} style={styles.instructionWrapper}>
       <Text style={styles.instructions}>{instruction}</Text>
     </View>
     ))
