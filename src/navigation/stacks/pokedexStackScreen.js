@@ -23,6 +23,10 @@ const PokedexStackScreen = () => (
         title: 'Pokedex',
         headerStyle: {
           backgroundColor: colors.hardBlue,
+        },
+        headerTitleStyle: {
+          fontSize: 40,
+          fontWeight: 'bold'
         }
       }}
     />
