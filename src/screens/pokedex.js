@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Button, View, Text, StyleSheet, FlatList, TextInput, Image } from 'react-native'
+import { View, Text, StyleSheet, FlatList, TextInput, Image } from 'react-native'
 import PokemonCard from '../components/pokemonCard'
 import Loading from '../components/loading'
 import useApi from '../hooks/useApi'
@@ -12,7 +12,7 @@ const POKE_API = 'https://pokeapi.co/api/v2'
 
 const Pokedex = ({ navigation }) => {
   const [state, dispatch] = useContext(PokedexContext)
-  const { loading, data: pokemons } = useApi({
+  const { data: pokemons } = useApi({
     url: `${POKE_API}/pokemon?limit=151&offset=0`
   })
 

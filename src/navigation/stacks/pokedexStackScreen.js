@@ -1,13 +1,8 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { View } from 'react-native'
 import Pokedex from '../../screens/pokedex'
 import PokemonDetail from '../../screens/pokemonDetail'
 import { colors } from '../../utils/colors'
 import { capitalizeWord } from '../../utils/utils'
-
-// TODO:
-// - Set pokemon name as header when detail view is shown
-// https://reactnavigation.org/docs/headers/#updating-options-with-setoptions
 
 const Stack = createNativeStackNavigator()
 
