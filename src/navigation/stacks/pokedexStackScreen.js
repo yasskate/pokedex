@@ -34,7 +34,7 @@ const PokedexStackScreen = () => (
       name="PokemonDetail"
       component={PokemonDetail}
       options={({ route }) => ({
-        title: `${capitalizeWord(route.params.pokemonName ?? 'Pokedex')} #${route.params.pokemonId}`,
+        title: `${capitalizeWord(route.params.pokemonName ?? 'Pokedex')} #${route.params.pokemonId ?? 0}`,
         headerTintColor: colors.hardBlue,
         headerStyle: {
           backgroundColor: colors.yellow,

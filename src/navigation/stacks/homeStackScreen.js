@@ -9,7 +9,7 @@ const HomeStackScreen = () => (
   <Stack.Navigator
     initialRouteName='Pokedex'
     screenOptions={{
-      headerTintColor: colors.hardYellow
+      headerTintColor: colors.hardYellow,
     }}
   >
     <Stack.Screen
@@ -28,6 +28,7 @@ const HomeStackScreen = () => (
         component={Information}
         options={{
           title: 'Information',
+          headerTintColor: colors.yellow,
           headerStyle: {
             backgroundColor: colors.hardBlue
           }
