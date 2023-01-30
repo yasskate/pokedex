@@ -5,8 +5,6 @@ import { PokedexContext } from '../store/contexts/pokedexContext'
 import { colors } from '../utils/colors'
 import { capitalizeWord } from '../utils/utils'
 
-// 5. Picture gallery
-
 const PokemonDetail = ({ route }) => {
   const [{ pokedex, pokemon }, dispatch] = useContext(PokedexContext)
   const { pokemonId } = route.params
@@ -24,13 +22,30 @@ const PokemonDetail = ({ route }) => {
     dispatch({ type: 'SET_POKEMON_DETAIL', payload: selectedPokemon })
   }
 
+  // TODO
+  // Improve image gallery slider on android
   const HeroImage = () => (
     <View style={styles.hero}>
-      <Image
-        style={styles.heroImage}
-        source={{ uri: pokemon?.sprites?.other?.['official-artwork']?.front_default}}
-      />
-    </View>
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      style={{ width: '100%' }}
+    >
+      {Object.values(pokemon?.sprites?.other?.['official-artwork'] ?? []).map(uri => (
+        <View style={{
+          marginHorizontal: 15,
+          width: 'auto',
+          borderBottomLeftRadius: 50,
+          borderBottomRightRadius: 50
+          }}>
+          <Image
+            style={styles.heroImage}
+            source={{ uri }}
+          />
+        </View>
+      ))}
+    </ScrollView>
+      </View>
   )
 
   const BodyDimensions = () => (
