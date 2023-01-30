@@ -1,5 +1,11 @@
 # Welcome to Yasser's pokedex
 
+|Home|Pokedex|Pokemon Detail|
+|---|---|---|
+|![photo_2023-01-30_10-37-48](https://user-images.githubusercontent.com/9702671/215538924-17d3cf91-9c21-43ad-9961-7851da91702a.jpg)|![photo_2023-01-30_10-37-55](https://user-images.githubusercontent.com/9702671/215539255-da2e1e12-41ee-417f-9460-6bf00d24337b.jpg)|![photo_2023-01-30_10-38-06](https://user-images.githubusercontent.com/9702671/215539302-9497adc1-dc93-4ff2-9ddf-a22de9d0194f.jpg)|
+
+
+
 ## How to get started?
 ### Requirements
 - Android Studio
