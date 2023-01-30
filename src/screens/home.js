@@ -3,9 +3,9 @@ import { Text, View, StyleSheet, SafeAreaView, ScrollView, Image, TouchableOpaci
 import { colors } from '../utils/colors'
     
 const INSTRUCTIONS = [
-  '1. Encontraras un listado de los primeros 150 pokemons',
-  '2. Tendras acceso a importante de cada pokemon',
-  '3. Podras realizar busquedas por nombre'
+  '1. You\'ll find a list with the first 150 pokemons',
+  '2. You\'ll have access to important information from each pokemon ',
+  '3. You could search pokemons by name'
 ]
 
 const Home = ({ navigation }) => {
@@ -33,17 +33,19 @@ const Home = ({ navigation }) => {
   )
 
   return (
-    <SafeAreaView
-      style={styles. container}
-    >
-      <ScrollView style={{ width: '100%' }} contentContainerStyle={styles.contentContainerStyle} horizontal={false}>
-        <StatusBar style="light" />
+    <SafeAreaView style={styles. container}>
+      <StatusBar style="light" />
+      <ScrollView
+        style={styles.scrollContainer}
+        contentContainerStyle={styles.contentContainerStyle}
+      >
         <Text style={styles.title}>Welcome to the Pokedex!</Text>
-        <Text style={styles.description}>En este pokedex encontraras informacion importante respecto a los pokemon de la region Kanto</Text>
+        <Text style={styles.description}>In this pokedex you'll find relevant information about the pokemons from kanto's region</Text>
         <View style={styles.instructionsContainer}>
           <Text style={styles.instructionsTitle}>Pokedex guide:</Text>
           <GuideInstructions />
         </View>
+
         <TouchableProjectInformation />
       </ScrollView>
     </SafeAreaView>
@@ -52,24 +54,29 @@ const Home = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
     backgroundColor: colors.hardBlue,
     flex: 1,
-    flexGrow: 1
+    flexGrow: 1,
+    width: '100%'
+  },
+  scrollContainer: {
+    backgroundColor: colors.hardBlue,
+    height: '100%',
+    flex: 1
   },
   contentContainerStyle: {
     justifyContent: 'space-around',
     backgroundColor: colors.hardBlue,
-    flex: 1
+    alignItems: 'center',
+    marginTop: 20,
+    flexGrow: 1
   },
   title: {
     color: colors.yellow,
     fontSize: 48,
     fontWeight: 'bold',
     paddingRight: 10,
-    textAlign: 'right',
-    width: '100%'
-
+    textAlign: 'right'
   },
   description: {
     color: colors.white,
@@ -95,7 +102,9 @@ const styles = StyleSheet.create({
   instructionWrapper: {
     backgroundColor: colors.hardBlue,
     width: '90%',
-    borderRadius: 10,
+    borderRadius: 12,
+    borderColor: colors.hardYellow,
+    borderWidth: 1,
     justifyContent: 'center'
   },
   instructions: {
