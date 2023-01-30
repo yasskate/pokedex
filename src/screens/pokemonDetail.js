@@ -71,7 +71,6 @@ const PokemonDetail = ({ route }) => {
     <SafeAreaView style={styles.container}>
       <StatusBar style="dark" />
       <HeroImage />
-      <Text style={styles.name}>{capitalizeWord(pokemon?.name ?? '')}</Text>
       <ScrollView
         horizontal={false}
         showsHorizontalScrollIndicator={false}
@@ -79,6 +78,7 @@ const PokemonDetail = ({ route }) => {
         style={{ width: '100%' }}
         contentContainerStyle={styles.contentContainerStyles}
       >
+        <Text style={styles.name}>{capitalizeWord(pokemon?.name ?? '')}</Text>
         <BodyDimensions />
         <Abilities />
       </ScrollView>
@@ -149,14 +149,13 @@ const styles = StyleSheet.create({
   abilityContainer: {
     backgroundColor: colors.yellow,
     justifyContent: 'center',
-    height: 70,
     paddingHorizontal: 10,
     margin: 10,
     borderRadius: 30
   },
   abilityName: {
     color: colors.hardBlue,
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold'
   }
 })
