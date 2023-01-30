@@ -44,7 +44,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
             onPress={onPress}
             style={styles.tab}
           >
-            <View style={styles.tabContainer}>
+            <View style={[styles.tabContainer, { borderWidth: isFocused ? 2 : 0 }]}>
               {isFocused && (
                 <Image
                   source={{ uri: getUri(label) }}
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: colors.blue,
+    borderColor: colors.hardYellow,
     flexGrow: 1,
     marginVertical: 10,
     paddingVertical: 5,
