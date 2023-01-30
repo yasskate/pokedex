@@ -1,11 +1,10 @@
 import { useContext, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Image, Text, View, SafeAreaView, ScrollView } from 'react-native'
+import { StyleSheet, Image, Text, View, SafeAreaView, ScrollView, FlatList } from 'react-native'
 import { PokedexContext } from '../store/contexts/pokedexContext'
 import { colors } from '../utils/colors'
 import { capitalizeWord } from '../utils/utils'
 
-// 2. Attack | pokemon. ?
 // 5. Picture gallery
 
 const PokemonDetail = ({ route }) => {
@@ -67,11 +66,32 @@ const PokemonDetail = ({ route }) => {
     )
   }
 
+  // TODO:
+  // - Fix "VirtualizedLists should never be nested on scroll view"
+  const Moves = () => {
+    const pokemonMoves = pokemon?.moves.map(({ move }) => move.name)
+    return (
+      <View style={styles.movesContainer}>
+        <Text style={styles.abilitiesTitle}>Moves</Text>
+          <FlatList
+            horizontal={false}
+            scrollEnabled={false}
+            data={pokemonMoves}
+            numColumns={3}
+            style={{ flex: 1 }}
+            renderItem={(item, index) => (
+              <View key={index} style={styles.moveContainer}>
+                <Text style={styles.abilityName}>{capitalizeWord(item?.item ?? '')}</Text>
+              </View>
+            )}
+          />
+      </View>
+    )
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="dark" />
-      <HeroImage />
-      <Text style={styles.name}>{capitalizeWord(pokemon?.name ?? '')}</Text>
       <ScrollView
         horizontal={false}
         showsHorizontalScrollIndicator={false}
@@ -79,8 +99,11 @@ const PokemonDetail = ({ route }) => {
         style={{ width: '100%' }}
         contentContainerStyle={styles.contentContainerStyles}
       >
+        <HeroImage />
+        <Text style={styles.name}>{capitalizeWord(pokemon?.name ?? '')}</Text>
         <BodyDimensions />
         <Abilities />
+        <Moves />
       </ScrollView>
     </SafeAreaView>
   )
@@ -89,7 +112,6 @@ const PokemonDetail = ({ route }) => {
 const styles = StyleSheet.create({
   contentContainerStyles: {
     alignItems: 'center',
-    flex: 1,
     width: '100%'
   },
   container: {
@@ -137,6 +159,11 @@ const styles = StyleSheet.create({
     marginTop: 30,
     width: '90%'
   },
+  movesContainer: {
+    alignItems: 'center',
+    marginTop: 30,
+    width: '95%'
+  },
   abilitiesTitle: {
     color: colors.hardYellow,
     fontSize: 26,
@@ -149,14 +176,20 @@ const styles = StyleSheet.create({
   abilityContainer: {
     backgroundColor: colors.yellow,
     justifyContent: 'center',
-    height: 70,
     paddingHorizontal: 10,
+    margin: 10,
+    borderRadius: 30
+  },
+  moveContainer: {
+    backgroundColor: colors.yellow,
+    justifyContent: 'center',
+    paddingHorizontal: 8,
     margin: 10,
     borderRadius: 30
   },
   abilityName: {
     color: colors.hardBlue,
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold'
   }
 })
